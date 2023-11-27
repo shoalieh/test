@@ -57,21 +57,23 @@ self.addEventListener("offline", () => {
 // Check for online status every 5 seconds
 setInterval(() => {
     console.log('navigator.onLine =>',navigator.onLine, ' and isOffline ', isOffline);
-    // if (navigator.onLine && isOffline) {
-    //     isOffline = false;
-    //     clients.matchAll({ type: "window" }).then((clients) => {
-    //         clients.forEach((client) => {
-    //             if (client.url === self.location.href) {
-    //                 client.navigate(ONLINE_URL);
-    //             }
-    //         });
-    //     });
+    if (navigator.onLine) {
+        isOffline = false;
+        clients.matchAll({ type: "window" }).then((clients) => {
+            clients.forEach((client) => {
+                if (client.url === self.location.href) {
+                    window.location = 'online.html';
+                    // client.navigate(ONLINE_URL);
+                }
+            });
+        });
     // } else if (!navigator.onLine && !isOffline) {
     //     isOffline = true;
     //     clients.matchAll({ type: "window" }).then((clients) => {
     //         clients.forEach((client) => {
     //             if (client.url === self.location.href) {
-    //                 client.navigate(OFFLINE_URL);
+    //                 window.location = 'offline.html';
+    //                 // client.navigate(OFFLINE_URL);
     //             }
     //         });
     //     });
