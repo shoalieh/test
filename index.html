@@ -32,6 +32,8 @@
 navigator.serviceWorker.addEventListener('message', (event) => {
     if (event.data && event.data.type === 'NAVIGATE_TO_ONLINE') {
         window.location.href = 'online.html';
+    }else if (event.data && event.data.type === 'NAVIGATE_TO_OFFLINE'){
+        window.location.href = 'offline.html';
     }
 });
 
