@@ -57,7 +57,7 @@ self.addEventListener("offline", () => {
 
 // Check for online status every 5 seconds
 setInterval(() => {
-    if (navigator.onLine && isOffline) {
+    if (navigator.onLine ) {
         isOffline = false;
         clients.matchAll({ type: "window" }).then((clients) => {
             clients.forEach((client) => {
@@ -66,7 +66,7 @@ setInterval(() => {
                 }
             });
         });
-    } else if (!navigator.onLine && !isOffline) {
+    } else if (!navigator.onLine ) {
         isOffline = true;
         clients.matchAll({ type: "window" }).then((clients) => {
             clients.forEach((client) => {
