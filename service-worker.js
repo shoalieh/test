@@ -48,10 +48,3 @@ self.addEventListener("offline", () => {
         });
     });
 });
-setInterval(() => {
-    if (window.navigator.onLine) {
-        console.log('online');
-    }else{
-        console.log('offline');
-    }
-}, 3000);
