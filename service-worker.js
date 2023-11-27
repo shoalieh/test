@@ -4,19 +4,10 @@ const OFFLINE_URL = "offline.html";
 const ONLINE_URL = "online.html";
 const HOME_URL = "index.html";
 
-let offlinePagePromise;
-
 self.addEventListener("install", (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
             return cache.addAll([OFFLINE_URL, ONLINE_URL, HOME_URL]);
-        })
-    );
-    // Initialize the offlinePagePromise during installation
-    offlinePagePromise = fetch(new Request(OFFLINE_URL)).then((response) =>
-        caches.open(CACHE_NAME).then((cache) => {
-            cache.put(new Request(OFFLINE_URL), response.clone());
-            return response;
         })
     );
 });
@@ -32,8 +23,8 @@ self.addEventListener("fetch", (event) => {
                     });
                 })
                 .catch(() => {
-                    // Use the offlinePagePromise for subsequent requests
-                    return caches.match(event.request) || offlinePagePromise;
+                    // Use the offline page for failed navigations
+                    return caches.match(new Request(OFFLINE_URL));
                 })
         );
     }
@@ -54,4 +45,3 @@ self.addEventListener("offline", () => {
         });
     });
 });
-
