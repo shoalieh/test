@@ -62,6 +62,7 @@ setInterval(() => {
         clients.matchAll({ type: "window" }).then((clients) => {
             clients.forEach((client) => {
                 if (client.url === self.location.href) {
+                    console.log('code here');
                     window.location = 'online.html';
                     // client.navigate(ONLINE_URL);
                 }
