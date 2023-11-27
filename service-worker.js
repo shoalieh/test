@@ -6,7 +6,8 @@ const ONLINE_URL = "https://shoalieh.github.io/test/online.html";
 self.addEventListener("install", (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
-            return cache.addAll([OFFLINE_URL, ONLINE_URL, HOME_URL]);
+            // return cache.addAll([OFFLINE_URL, ONLINE_URL, HOME_URL]);
+            return cache.addAll([OFFLINE_URL, ONLINE_URL]);
         })
     );
 });
