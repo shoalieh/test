@@ -29,6 +29,12 @@
                     console.error('Service Worker registration failed:', error);
                 });
         }
+navigator.serviceWorker.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'NAVIGATE_TO_ONLINE') {
+        window.location.href = 'online.html';
+    }
+});
+
     </script>
 </body>
 </html>
