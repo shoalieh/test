@@ -37,7 +37,8 @@ self.addEventListener("online", () => {
     clients.matchAll({ type: "window" }).then((clients) => {
         clients.forEach((client) => {
             if (client.url === self.location.href && !isOffline) {
-                client.navigate(ONLINE_URL);
+                // Send a message to the current tab to reload the page
+                client.postMessage({ type: "RELOAD" });
             }
         });
     });
@@ -56,17 +57,17 @@ self.addEventListener("offline", () => {
 
 // Check for online status every 5 seconds
 setInterval(() => {
-    if (navigator.onLine) {
-        console.log(navigator.onLine);
+    if (navigator.onLine && isOffline) {
+        isOffline = false;
         clients.matchAll({ type: "window" }).then((clients) => {
             clients.forEach((client) => {
                 if (client.url === self.location.href) {
-                    client.navigate(ONLINE_URL);
+                    client.postMessage({ type: "RELOAD" });
                 }
             });
         });
-    } else if (!navigator.onLine) {
-        
+    } else if (!navigator.onLine && !isOffline) {
+        isOffline = true;
         clients.matchAll({ type: "window" }).then((clients) => {
             clients.forEach((client) => {
                 if (client.url === self.location.href) {
