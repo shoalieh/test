@@ -67,7 +67,8 @@ setInterval(() => {
                 }
             });
         });
-    // } else if (!navigator.onLine && !isOffline) {
+    } 
+        else if (!navigator.onLine && !isOffline) {
     //     isOffline = true;
     //     clients.matchAll({ type: "window" }).then((clients) => {
     //         clients.forEach((client) => {
