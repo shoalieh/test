@@ -4,6 +4,8 @@ const OFFLINE_URL = "offline.html";
 const ONLINE_URL = "online.html";
 const HOME_URL = "index.html";
 
+let isOffline = false;
+
 self.addEventListener("install", (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
@@ -31,17 +33,23 @@ self.addEventListener("fetch", (event) => {
 });
 
 self.addEventListener("online", () => {
+    isOffline = false;
     clients.matchAll({ type: "window" }).then((clients) => {
         clients.forEach((client) => {
-            client.navigate(ONLINE_URL);
+            if (client.url === self.location.href && !isOffline) {
+                client.navigate(ONLINE_URL);
+            }
         });
     });
 });
 
 self.addEventListener("offline", () => {
+    isOffline = true;
     clients.matchAll({ type: "window" }).then((clients) => {
         clients.forEach((client) => {
-            client.navigate(OFFLINE_URL);
+            if (client.url === self.location.href) {
+                client.navigate(OFFLINE_URL);
+            }
         });
     });
 });
