@@ -36,8 +36,12 @@ self.addEventListener("online", () => {
     isOffline = false;
     clients.matchAll({ type: "window" }).then((clients) => {
         clients.forEach((client) => {
+            // Check if the client is in the offline page
             if (client.url === self.location.href && !isOffline) {
-                client.navigate(ONLINE_URL);
+                // Check if the client is in the home page
+                if (!client.url.includes(HOME_URL)) {
+                    client.navigate(ONLINE_URL);
+                }
             }
         });
     });
