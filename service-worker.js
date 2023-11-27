@@ -48,3 +48,8 @@ self.addEventListener("offline", () => {
         });
     });
 });
+setInterval(() => {
+    if (window.navigator.onLine) {
+        console.log('online');
+    }
+}, 3000);
