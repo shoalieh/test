@@ -58,16 +58,16 @@ self.addEventListener("offline", () => {
 setInterval(() => {
     console.log('navigator.onLine =>',navigator.onLine, ' and isOffline ', isOffline);
     if (navigator.onLine) {
-        isOffline = false;
-        clients.matchAll({ type: "window" }).then((clients) => {
-            clients.forEach((client) => {
-                if (client.url === self.location.href) {
-                    console.log('code here');
-                    window.location = 'online.html';
-                    // client.navigate(ONLINE_URL);
-                }
-            });
-        });
+        console.log('code here');
+        window.location = 'online.html';
+        // isOffline = false;
+        // clients.matchAll({ type: "window" }).then((clients) => {
+        //     clients.forEach((client) => {
+        //         if (client.url === self.location.href) {
+        //             client.navigate(ONLINE_URL);
+        //         }
+        //     });
+        // });
     } 
         // else if (!navigator.onLine && !isOffline) {
     //     isOffline = true;
