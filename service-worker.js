@@ -1,13 +1,22 @@
+// service-worker.js
 const CACHE_NAME = "offline-cache";
 const OFFLINE_URL = "https://shoalieh.github.io/test/offline.html";
 const ONLINE_URL = "https://shoalieh.github.io/test/online.html";
-// const HOME_URL = "https://shoalieh.github.io/test/index.html";
+const HOME_URL = "https://shoalieh.github.io/test/index.html";
+
+let offlinePagePromise;
 
 self.addEventListener("install", (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
-            // return cache.addAll([OFFLINE_URL, ONLINE_URL, HOME_URL]);
-            return cache.addAll([OFFLINE_URL, ONLINE_URL]);
+            return cache.addAll([OFFLINE_URL, ONLINE_URL, HOME_URL]);
+        })
+    );
+    // Initialize the offlinePagePromise during installation
+    offlinePagePromise = fetch(new Request(OFFLINE_URL)).then((response) =>
+        caches.open(CACHE_NAME).then((cache) => {
+            cache.put(new Request(OFFLINE_URL), response.clone());
+            return response;
         })
     );
 });
@@ -23,12 +32,8 @@ self.addEventListener("fetch", (event) => {
                     });
                 })
                 .catch(() => {
-                    return caches.match(event.request).then((cachedResponse) => {
-                        if (cachedResponse) {
-                            return cachedResponse;
-                        }
-                        return caches.match(new Request(OFFLINE_URL));
-                    });
+                    // Use the offlinePagePromise for subsequent requests
+                    return caches.match(event.request) || offlinePagePromise;
                 })
         );
     }
@@ -49,3 +54,4 @@ self.addEventListener("offline", () => {
         });
     });
 });
+
