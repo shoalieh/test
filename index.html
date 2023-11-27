@@ -1,20 +1,8 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            text-align: center;
-            padding: 20px;
-        }
-        h1 {
-            color: #333;
-        }
-    </style>
+    <!-- ... -->
 </head>
 <body>
     <h1>Welcome to the Home Page</h1>
@@ -29,6 +17,14 @@
                     console.error('Service Worker registration failed:', error);
                 });
         }
+
+        // Listen for messages from the service worker
+        navigator.serviceWorker.addEventListener('message', (event) => {
+            if (event.data && event.data.type === 'RELOAD') {
+                // Reload the page
+                window.location.reload();
+            }
+        });
     </script>
 </body>
 </html>
