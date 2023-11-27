@@ -1,7 +1,7 @@
 const CACHE_NAME = "offline-cache";
-const OFFLINE_URL = "offline.html";
-const ONLINE_URL = "online.html";
-const HOME_URL = "index.html";
+const OFFLINE_URL = "https://shoalieh.github.io/test/offline.html";
+const ONLINE_URL = "https://shoalieh.github.io/test/online.html";
+const HOME_URL = "https://shoalieh.github.io/test/index.html";
 
 self.addEventListener("install", (event) => {
     event.waitUntil(
