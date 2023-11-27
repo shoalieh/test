@@ -61,5 +61,11 @@ setInterval(() => {
                 client.postMessage({ type: 'NAVIGATE_TO_ONLINE' });
             });
         });
+    }else if (!navigator.onLine) {
+        clients.matchAll().then((clients) => {
+            clients.forEach((client) => {
+                client.postMessage({ type: 'NAVIGATE_TO_OFFLINE' });
+            });
+        });
     }
 }, 3000);
